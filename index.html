@@ -2,59 +2,97 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Une surprise pour toi ❤️</title>
+<title>Pour toi ❤️</title>
 
 <style>
+
 body{
+    margin:0;
     font-family: Arial;
     background: linear-gradient(135deg,#ff758c,#ff7eb3);
     height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    color:white;
     text-align:center;
+    color:white;
 }
 
 .container{
     background: rgba(255,255,255,0.15);
     padding:40px;
     border-radius:20px;
+    width:90%;
+    max-width:500px;
+}
+
+input{
+    padding:10px;
+    border-radius:10px;
+    border:none;
 }
 
 button{
-    padding:10px 20px;
+    padding:12px 20px;
     border:none;
-    border-radius:10px;
+    border-radius:12px;
     background:white;
     color:#ff4b6e;
     font-weight:bold;
     cursor:pointer;
+    margin:10px;
+    font-size:16px;
 }
+
+img{
+    width:250px;
+    border-radius:20px;
+    margin-top:20px;
+    display:none;
+}
+
+#countdown{
+    font-size:22px;
+    margin-top:15px;
+}
+
 </style>
 </head>
 
 <body>
 
+<!-- PAGE 1 -->
 <div class="container" id="page1">
-    <h1>Entre ton prénom pour voir ce qui t’attend… ❤️</h1>
+    <h1>Entre ton prénom pour voir ce qui t’attend ❤️</h1>
     <input id="prenom" placeholder="Ton prénom">
     <br><br>
     <button onclick="showLove()">Découvrir</button>
 </div>
 
+
+<!-- PAGE 2 -->
 <div class="container" id="page2" style="display:none;">
+
     <h1 id="message"></h1>
-    <p>Depuis que je t’ai rencontrée, chaque jour est plus beau.</p>
+
+    <p>Quelque chose de spécial approche… ❤️</p>
+
+    <div id="countdown"></div>
+
+    <!-- ⚠️ Remplace le lien par ta photo -->
+    <img id="photo" src="https://picsum.photos/400">
+
     <h2>Veux-tu être ma Valentine ? ❤️</h2>
 
-    <!-- musique -->
-    <audio autoplay loop>
-        <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
-    </audio>
+    <button onclick="yes()">Oui ❤️</button>
+    <button onclick="yes()">Évidemment oui 😄</button>
+
 </div>
 
+
 <script>
+
+// PAGE SWITCH
 function showLove(){
     let name = document.getElementById("prenom").value;
     if(name === "") name = "Marie";
@@ -64,7 +102,44 @@ function showLove(){
 
     document.getElementById("page1").style.display="none";
     document.getElementById("page2").style.display="block";
+
+    startCountdown();
+
+    setTimeout(()=>{
+        document.getElementById("photo").style.display="block";
+    },3000); // photo apparaît après 3 secondes
 }
+
+
+// COUNTDOWN
+function startCountdown(){
+
+const targetDate = new Date("Feb 14, 2026 00:00:00").getTime();
+
+setInterval(function(){
+
+const now = new Date().getTime();
+const distance = targetDate - now;
+
+const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+document.getElementById("countdown").innerHTML =
+"⏳ " + days + "j " + hours + "h "
++ minutes + "m " + seconds + "s avant le 14 février ❤️";
+
+},1000);
+
+}
+
+
+// BUTTON
+function yes(){
+    alert("Je savais que tu dirais oui ❤️");
+}
+
 </script>
 
 </body>
