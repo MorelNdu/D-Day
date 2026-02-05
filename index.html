@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Une surprise pour toi ❤️</title>
+
+<style>
+body{
+    font-family: Arial;
+    background: linear-gradient(135deg,#ff758c,#ff7eb3);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    text-align:center;
+}
+
+.container{
+    background: rgba(255,255,255,0.15);
+    padding:40px;
+    border-radius:20px;
+}
+
+button{
+    padding:10px 20px;
+    border:none;
+    border-radius:10px;
+    background:white;
+    color:#ff4b6e;
+    font-weight:bold;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="page1">
+    <h1>Entre ton prénom pour voir ce qui t’attend… ❤️</h1>
+    <input id="prenom" placeholder="Ton prénom">
+    <br><br>
+    <button onclick="showLove()">Découvrir</button>
+</div>
+
+<div class="container" id="page2" style="display:none;">
+    <h1 id="message"></h1>
+    <p>Depuis que je t’ai rencontrée, chaque jour est plus beau.</p>
+    <h2>Veux-tu être ma Valentine ? ❤️</h2>
+
+    <!-- musique -->
+    <audio autoplay loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+    </audio>
+</div>
+
+<script>
+function showLove(){
+    let name = document.getElementById("prenom").value;
+    if(name === "") name = "Marie";
+
+    document.getElementById("message").innerText =
+    name + ", cette page est pour toi ❤️";
+
+    document.getElementById("page1").style.display="none";
+    document.getElementById("page2").style.display="block";
+}
+</script>
+
+</body>
+</html>
