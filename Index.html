@@ -2,21 +2,49 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Pour toi ❤️</title>
+<title>Une surprise pour toi ❤️</title>
 
 <style>
 
 body{
     margin:0;
-    font-family: Arial;
-    background: linear-gradient(135deg,#ff758c,#ff7eb3);
+    font-family:'Segoe UI',sans-serif;
+    overflow:hidden;
+}
+
+/* INTRO NETFLIX */
+
+#intro{
+    position:fixed;
+    width:100%;
+    height:100vh;
+    background:black;
+    color:red;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:70px;
+    font-weight:bold;
+    letter-spacing:8px;
+    animation:fadeOut 3s forwards;
+}
+
+@keyframes fadeOut{
+    0%{opacity:1;}
+    80%{opacity:1;}
+    100%{opacity:0; visibility:hidden;}
+}
+
+/* FOND ROMANTIQUE */
+
+#main{
     height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    text-align:center;
+    background: linear-gradient(135deg,#ff4b6e,#ff758c,#ff7eb3);
     color:white;
-    overflow:hidden;
+    text-align:center;
 }
 
 .container{
@@ -24,19 +52,23 @@ body{
     padding:40px;
     border-radius:20px;
     width:90%;
-    max-width:500px;
+    max-width:520px;
 }
+
+/* INPUT */
 
 input{
-    padding:10px;
-    border-radius:10px;
+    padding:12px;
     border:none;
+    border-radius:10px;
 }
 
+/* BUTTONS */
+
 button{
-    padding:12px 20px;
+    padding:14px 22px;
     border:none;
-    border-radius:12px;
+    border-radius:14px;
     background:white;
     color:#ff4b6e;
     font-weight:bold;
@@ -45,30 +77,37 @@ button{
     font-size:18px;
 }
 
+/* PHOTO */
+
 img{
-    width:250px;
+    width:260px;
     border-radius:20px;
     margin-top:20px;
     display:none;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
 }
+
+/* COUNTDOWN */
 
 #countdown{
     font-size:22px;
     margin-top:15px;
 }
 
-#noBtn{
-    position:relative;
+/* TEXTE QUI S'ECRIT */
+
+#typed{
+    font-size:26px;
+    min-height:60px;
 }
 
-/* coeurs */
+/* COEURS */
 
 .heart{
     position:fixed;
     top:-10px;
-    color:red;
     font-size:24px;
-    animation: fall linear forwards;
+    animation:fall linear forwards;
 }
 
 @keyframes fall{
@@ -77,59 +116,86 @@ img{
     }
 }
 
+/* BOUTON NON */
+
+#noBtn{
+    position:relative;
+}
+
 </style>
 </head>
 
 <body>
 
+<div id="intro">LOVE</div>
+
+<div id="main">
+
 <!-- PAGE 1 -->
 <div class="container" id="page1">
-    <h1>Entre ton prénom pour voir ce qui t’attend ❤️</h1>
-    <input id="prenom" placeholder="Ton prénom">
+    <h1>Entre ton prénom...</h1>
+    <input id="prenom" placeholder="Ton prénom ❤️">
     <br><br>
-    <button onclick="showLove()">Découvrir</button>
+    <button onclick="startLove()">Entrer</button>
 </div>
-
 
 <!-- PAGE 2 -->
 <div class="container" id="page2" style="display:none;">
 
-    <h1 id="message"></h1>
-
-    <p>Quelque chose de spécial approche… ❤️</p>
+    <div id="typed"></div>
 
     <div id="countdown"></div>
 
-    <!-- ⚠️ remplace par ta photo -->
-    <img id="photo" src="https://Pic.jpg">
+    <!-- remplace par ta photo -->
+    <img id="photo" src="Pic.jpg">
 
     <h2>Veux-tu être ma Valentine ? ❤️</h2>
 
-    <button onclick="yes()" style="font-size:22px;">Oui ❤️</button>
+    <button onclick="yes()" style="font-size:24px;">Oui ❤️</button>
     <button id="noBtn">Non 😜</button>
 
 </div>
 
+</div>
 
 <script>
 
-// PAGE SWITCH
-function showLove(){
+// TEXTE QUI S'ECRIT
+function typeWriter(text){
 
-    let name = document.getElementById("prenom").value;
-    if(name === "") name = "Marie";
+let i=0;
+const speed=50;
+const target=document.getElementById("typed");
 
-    document.getElementById("message").innerText =
-    name + ", cette page est pour toi ❤️";
+function typing(){
+    if(i<text.length){
+        target.innerHTML+=text.charAt(i);
+        i++;
+        setTimeout(typing,speed);
+    }
+}
 
-    document.getElementById("page1").style.display="none";
-    document.getElementById("page2").style.display="block";
+typing();
+}
 
-    startCountdown();
 
-    setTimeout(()=>{
-        document.getElementById("photo").style.display="block";
-    },2500);
+// DEMARRAGE
+function startLove(){
+
+let name=document.getElementById("prenom").value;
+if(name==="") name="Marie";
+
+document.getElementById("page1").style.display="none";
+document.getElementById("page2").style.display="block";
+
+typeWriter(name + "... depuis que je t’ai rencontrée, ma vie est devenue plus belle ❤️");
+
+startCountdown();
+
+setTimeout(()=>{
+document.getElementById("photo").style.display="block";
+},3500);
+
 }
 
 
@@ -143,14 +209,13 @@ setInterval(function(){
 const now = new Date().getTime();
 const distance = targetDate - now;
 
-const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+const d = Math.floor(distance/(1000*60*60*24));
+const h = Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+const m = Math.floor((distance%(1000*60*60))/(1000*60));
+const s = Math.floor((distance%(1000*60))/1000);
 
-document.getElementById("countdown").innerHTML =
-"⏳ " + days + "j " + hours + "h "
-+ minutes + "m " + seconds + "s avant le 14 février ❤️";
+document.getElementById("countdown").innerHTML=
+"⏳ "+d+"j "+h+"h "+m+"m "+s+"s avant notre moment ❤️";
 
 },1000);
 
@@ -158,43 +223,42 @@ document.getElementById("countdown").innerHTML =
 
 
 // BOUTON NON QUI FUIT
-const noBtn = document.getElementById("noBtn");
+const noBtn=document.getElementById("noBtn");
 
-noBtn.addEventListener("mouseover", function(){
+noBtn.addEventListener("mouseover",()=>{
 
-    const x = Math.random() * 300 - 150;
-    const y = Math.random() * 300 - 150;
+const x=Math.random()*300-150;
+const y=Math.random()*300-150;
 
-    noBtn.style.transform = `translate(${x}px, ${y}px)`;
-});
+noBtn.style.transform=`translate(${x}px,${y}px)`;
 
-noBtn.addEventListener("click", function(){
-    alert("Mauvais choix 😄 Essaie encore !");
 });
 
 
-// PLUIE DE COEURS
+// COEURS
 function createHeart(){
 
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerHTML="❤️";
+const heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="❤️";
 
-    heart.style.left = Math.random()*100 + "vw";
-    heart.style.animationDuration = (Math.random()*2+3)+"s";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(Math.random()*2+3)+"s";
 
-    document.body.appendChild(heart);
+document.body.appendChild(heart);
 
-    setTimeout(()=>heart.remove(),5000);
+setTimeout(()=>heart.remove(),5000);
+
 }
 
 
 // QUAND ELLE DIT OUI
 function yes(){
 
-    alert("Je savais que tu dirais oui ❤️");
+alert("❤️ Meilleure décision ❤️");
 
-    setInterval(createHeart,200);
+setInterval(createHeart,150);
+
 }
 
 </script>
